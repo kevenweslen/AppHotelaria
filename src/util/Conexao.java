@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class Conexao {
     private String driver = "com.mysql.cj.jdbc.Driver";
     //jdbc:mysql://localhost:3306/dbHotel
-    private String url = "jdbc:mysql://127.0.0.1:3306/dbHotel";
-    private String usuario = "dbaHotel";
-    private String senha = "dbaHotel123";
+    private String url = "jdbc:mysql://127.0.0.1:3306/hotel";
+    private String usuario = "root";
+    private String senha = "";
 
     public Connection conectar() {
         /*Objeto da conexao inicializa nulo pois não
@@ -24,10 +24,9 @@ public class Conexao {
             condb = DriverManager.getConnection(url, usuario, senha);
             return condb;
 
-        } catch (SQLException erro) {
+        } catch (SQLException | ClassNotFoundException erro) {
             System.out.print("Erro ao conectar ao Banco de Dados " + erro);
             return null;
         }
     }
 }
- 
