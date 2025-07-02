@@ -6,6 +6,7 @@ import util.Conexao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 
 public class pedidosDAO {
@@ -23,7 +24,7 @@ public class pedidosDAO {
             int limhaafetada = novoPedido.executeUpdate();
             return limhaafetada > 0;
         }catch (Exception erro){
-            System.out.println("Erro ao inserir pedido: " + erro);
+            System.out.println("Erro ao inserir pedido " + erro);
             return false;
         }
     }
@@ -43,7 +44,7 @@ public class pedidosDAO {
             return limhaafetada > 0;
 
         }catch (Exception erro){
-            System.out.println("Erro ao alterar pedido: " + erro);
+            System.out.println("Erro ao alterar pedido " + erro);
             return false;
         }
     }
@@ -57,8 +58,27 @@ public class pedidosDAO {
             int linhaAfetada = delPedido.executeUpdate();
             return linhaAfetada > 0;
         } catch (Exception erro){
-            System.out.println("Erro ao excluir pedido: " + erro);
+            System.out.println("Erro ao excluir pedido " + erro);
             return false;
+        }
+    }
+    public void pesquisarPedido() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement pesquisarPedido = conndb.prepareStatement("SELECT usuario_id, cliente_id, pagamento FROM pedidos WHERE id=?");
+            pesquisarPedido.setInt(1, 1);
+            ResultSet resultado = pesquisarPedido.executeQuery();
+            while(resultado.next()){
+                String usuario = resultado.getString("usuario");
+                String cliente = resultado.getString("cliente");
+                String pagamento = resultado.getString("pagamento");
+                System.out.println("Usuario: " + usuario
+                + "\nCliente: " + cliente
+                + "\nPagamento: " + pagamento);
+                conndb.close();
+            }
+        }catch (Exception erro){
+            System.out.println("Erro ao pesquisar pedido " + erro);
         }
     }
 }

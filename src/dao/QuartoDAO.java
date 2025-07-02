@@ -69,5 +69,13 @@ public class QuartoDAO {
             return false;
         }
     }
+    public void pesquisarQuarto() {
+        try{
+            Connection conndb = conexao.conectar();
+            PreparedStatement pesquisarWuarto = conndb.prepareStatement("SELECT usuario_id, cliente_id, pagamento FROM pedidos WHERE id=?");
+        }catch (Exception erro){
+            System.out.println("Erro ao pesquisar quarto" + erro);
+        }
+    }
 }
 

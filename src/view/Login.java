@@ -1,5 +1,7 @@
 package view;
 
+import com.mysql.cj.x.protobuf.MysqlxCursor;
+import controller.UsuarioController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,14 +20,16 @@ public class Login extends Application {
     @Override
     public void start(Stage janela) throws Exception {
 
-        Button BtnSub = new Button("Subimeter");
-        BtnSub.setStyle("-fx-gramphic-text-gap: 10px;" +
+        Button btnSub = new Button("Subimeter");
+        btnSub.setStyle("-fx-gramphic-text-gap: 10px;" +
                 "-fx-cursor: hand;" +
                 "-fx-border-radius: 25px;" +
                 "-fx-padding: 10px;" +
                 "-fx-border-color: Black;" +
                 "-fx-background-color: rgba(255,191,0,0.75);" +
                 "-fx-background-radius: 25px");
+
+
 
         Image imgLogin = new Image(getClass().getResourceAsStream
                 ("/view/img/imgLogin.jpeg"));
@@ -118,12 +122,26 @@ public class Login extends Application {
 
         HBox btnBox = new HBox(stackPane, eyeButton);
 
+        btnSub.setOnAction(evento -> {
+            String usuario = txtUser.getText();
+            String senha1 = txtSenha.isVisible() ? txtSenha.getText() : passSenha.getText();
+
+            UsuarioController usuarioController = new UsuarioController();
+            boolean loginSucesso = usuarioController.verificarUsuario(usuario, senha1);
+            if(loginSucesso){
+                System.out.println("Login realizado com sucesso");
+
+            }else {
+                System.out.println("erro ao efetuar login");
+            }
+        });
+
         GridPane formGrid = new GridPane();
         formGrid.add(lblUser, 0, 0);
         formGrid.add(txtUser, 1, 0);
         formGrid.add(senha, 0, 1);
         formGrid.add(btnBox, 1, 1);
-        formGrid.add(BtnSub, 1, 3);
+        formGrid.add(btnSub, 1, 3);
         formGrid.setAlignment(Pos.CENTER);
         formGrid.setHgap(10);
         formGrid.setVgap(10);
